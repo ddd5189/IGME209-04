@@ -5,7 +5,7 @@
 #include <SFML\Graphics.hpp>
 
 void update() {
-
+	
 }
 
 void display() {

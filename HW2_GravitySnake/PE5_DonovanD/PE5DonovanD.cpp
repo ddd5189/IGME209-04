@@ -9,6 +9,8 @@
 
 int main()
 {
+	printf("Welcome to Gravity Snake!\nTo play, use fwnhldfjn.");
+
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
 	while (window.isOpen())
@@ -19,9 +21,10 @@ int main()
 				window.close();
 			}
 		}
-	
+
 		window.clear(sf::Color::White);
-	
+
+
 		//sf::CircleShape circle1(50);
 		//circle1.setFillColor(sf::Color(100, 250, 50));
 		//circle1.setPosition(10, 50);
