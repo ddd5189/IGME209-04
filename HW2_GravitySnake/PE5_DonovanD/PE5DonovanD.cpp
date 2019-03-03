@@ -13,6 +13,8 @@ using namespace std;
 
 int main()
 {
+
+
 	// variable for while loop
 	bool loop = true;
 	char key;
@@ -20,13 +22,33 @@ int main()
 	float targetX = 0;
 	float targetY = 0;
 
+	int targetHit = 0;
+
 	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.") << endl;
 
 	// Define the gravity vector.
-	b2Vec2 gravity(0.0f, -.02f);
+	b2Vec2 gravity(0.0f, -.1f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
+
+	// Define the ground body.
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, -10.0f);
+
+	// Call the body factory which allocates memory for the ground body
+	// from a pool and creates the ground box shape (also from a pool).
+	// The body is also added to the world.
+	b2Body* groundBody = world.CreateBody(&groundBodyDef);
+
+	// Define the ground box shape.
+	b2PolygonShape groundBox;
+
+	// The extents are the half-widths of the box.
+	groundBox.SetAsBox(100.0f, 0.0f);
+
+	// Add the ground fixture to the ground body.
+	groundBody->CreateFixture(&groundBox, 0.0f);
 
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef snakeBodyDef;
@@ -46,7 +68,7 @@ int main()
 	fixtureDef.density = 0.005f;
 
 	// Override the default friction.
-	fixtureDef.friction = 0.8f;
+	fixtureDef.friction = 0.9f;
 
 	// Add the shape to the body.
 	snakeBody->CreateFixture(&fixtureDef);
@@ -85,6 +107,7 @@ int main()
 			//
 			//	window.clear(sf::Color::Green);
 
+			// key press if - if p (don't know char for ESC) exit loop, if l move target (will get removed when collision is figured out), if wsad apply force in that direction
 				if (_kbhit()) {
 					key = _getch();
 					if (key == 'p') {
@@ -114,8 +137,26 @@ int main()
 				}
 
 
+				// one is snake
+				// two is target
+				// if ((oneXmin < twoXmax) && (oneXmax > twoXmin) && (oneYmin < twoYmax) && (oneYmax > twoYmin))
 
 
+				// collision detection between target and snake
+				if ((position.x < targetX) && (position.x > targetX) && (position.y < targetY) && (position.y > targetY))
+				{
+					if (targetHit > 2) {
+						cout << "Game Over" << endl;
+						loop = false;
+					}
+					else {
+						cout << "IT HIT" << endl;
+						moveTarget(targetX, targetY);
+						targetHit++;
+					}
+				}
+
+				//printf("%4.2f %4.2f\n", position.x, position.y);
 
 			//	sf::RectangleShape rectangle1(sf::Vector2f(120, 50));
 			//	rectangle1.setFillColor(sf::Color(300, 150, 50));
