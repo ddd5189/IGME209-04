@@ -13,18 +13,25 @@ using namespace std;
 
 int main()
 {
-
-
 	// variable for while loop
 	bool loop = true;
+	// variable to help with key inputs
 	char key;
+
+	// the sfml positions of the box2d snake
+	float sfmlPosX;
+	float sfmlPosY;
 	
+	// target x and y
 	float targetX = 0;
 	float targetY = 0;
 
+	// counting the target hits
 	int targetHit = 0;
 
-	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.") << endl;
+	int score = 0;
+
+	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.\nIn order for the game to work, you must be in the input window\nFor optimal play, shrink the input window so that the play window is visable\n\nScore is like golf, the lower the better.\nDon't be surprised if the score is really high!") << endl;
 
 	// Define the gravity vector.
 	b2Vec2 gravity(0.0f, -.1f);
@@ -34,7 +41,7 @@ int main()
 
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -10.0f);
+	groundBodyDef.position.Set(0.0f, -250.0f);
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -45,7 +52,7 @@ int main()
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(100.0f, 0.0f);
+	groundBox.SetAsBox(10000.0f, 0.0f);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
@@ -80,12 +87,36 @@ int main()
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	//sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-
+	// set the first target in the screen
 	moveTarget(targetX, targetY);
 
 	while (loop)
 	{
+
+		sf::RenderWindow window(sf::VideoMode(800, 800), "My window");
+
+		while (window.isOpen())
+		{
+			sf::Event event;
+			while (window.pollEvent(event)) {
+				if (event.type == sf::Event::Closed) {
+					window.close();
+					loop = false;
+				}
+			}
+		
+			window.clear(sf::Color::White);
+
+			// create the snake and target in the window
+
+			sf::RectangleShape target(sf::Vector2f(25, 25));
+			target.setFillColor(sf::Color(100, 0, 0));
+			target.setPosition(targetX, targetY);
+
+			sf::RectangleShape snake(sf::Vector2f(50, 50));
+			snake.setFillColor(sf::Color(10, 150, 50));
+			snake.setPosition(400, 400);
+
 		// This is our little game loop.
 		for (int32 i = 0; i < 60; ++i)
 		{
@@ -96,16 +127,9 @@ int main()
 			// Now print the position and angle of the body.
 			b2Vec2 position = snakeBody->GetPosition();
 
-			//while (window.isOpen())
-			//{
-			//	sf::Event event;
-			//	while (window.pollEvent(event)) {
-			//		if (event.type == sf::Event::Closed) {
-			//			window.close();
-			//		}
-			//	}
-			//
-			//	window.clear(sf::Color::Green);
+			// converting box2d positions to work in the sfml window
+			sfmlPosX = -position.x;
+			sfmlPosY = -position.y + 500;
 
 			// key press if - if p (don't know char for ESC) exit loop, if l move target (will get removed when collision is figured out), if wsad apply force in that direction
 				if (_kbhit()) {
@@ -118,96 +142,70 @@ int main()
 						moveTarget(targetX, targetY);
 					}
 					else if (key == 'w') {
-						cout << "W was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(0, 1), true);
+						//cout << "W was Pressed" << endl;
+						snakeBody->ApplyForceToCenter(b2Vec2(0, 0.5f), true);
 					}
 					else if (key == 's') {
-						cout << "S was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(0, -1), true);
+						//cout << "S was Pressed" << endl;
+						snakeBody->ApplyForceToCenter(b2Vec2(0, -0.5f), true);
 					}
 					else if (key == 'a') {
-						cout << "A was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(-1, 0), true);
+						//cout << "A was Pressed" << endl;
+						snakeBody->ApplyForceToCenter(b2Vec2(0.5f, 0), true);
 					}
 					else if (key == 'd') {
-						cout << "D was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(1, 0), true);
+						//cout << "D was Pressed" << endl;
+						snakeBody->ApplyForceToCenter(b2Vec2(-0.5f, 0), true);
 					}
-					printf("%4.2f %4.2f\n", position.x, position.y);
+					printf("%4.2f %4.2f\n", sfmlPosX, sfmlPosY);
+					//printf("%4.2f %4.2f\n", targetX, targetY);
+					//cout << "Score: " << score << endl;
 				}
 
 
-				// one is snake
-				// two is target
-				// if ((oneXmin < twoXmax) && (oneXmax > twoXmin) && (oneYmin < twoYmax) && (oneYmax > twoYmin))
-
-
 				// collision detection between target and snake
-				if ((position.x < targetX) && (position.x > targetX) && (position.y < targetY) && (position.y > targetY))
+				if ((sfmlPosX - 20 < targetX + 20) && (sfmlPosX + 20 > targetX - 20) && (sfmlPosY - 20 < targetY + 20) && (sfmlPosY + 20> targetY -20))
 				{
-					if (targetHit > 2) {
+					if (targetHit > 10) {
 						cout << "Game Over" << endl;
+						window.close();
 						loop = false;
 					}
 					else {
 						cout << "IT HIT" << endl;
 						moveTarget(targetX, targetY);
 						targetHit++;
+						cout << targetHit << endl;
 					}
 				}
 
+				// check to see if too far out of bounds, then close the game
+				if ((sfmlPosX > 850) || (sfmlPosX < -100) || (sfmlPosY < -100)) {
+					window.close();
+					loop = false;
+				}
+
+				// if the snake is sitting on the ground, add score
+				if (sfmlPosY > 748) {
+					score++;
+				}
+
+				// drawing target and snake in the window
+				window.clear(sf::Color::White);
+				
+				snake.setPosition(sfmlPosX, sfmlPosY);
+				window.draw(target);
+				window.draw(snake);
+
 				//printf("%4.2f %4.2f\n", position.x, position.y);
 
-			//	sf::RectangleShape rectangle1(sf::Vector2f(120, 50));
-			//	rectangle1.setFillColor(sf::Color(300, 150, 50));
-			//	rectangle1.setPosition(targetX, targetY);
-			//
-			//	window.display();
-			//}
+
+			window.display();
+			}
 		}
 
 	}
 
 	return 0;
-
-	//sf::CircleShape circle1(50);
-	//circle1.setFillColor(sf::Color(100, 250, 50));
-	//circle1.setPosition(10, 50);
-	//
-	//sf::CircleShape circle2(80);
-	//circle2.setFillColor(sf::Color(10, 300, 50));
-	//circle2.setPosition(200, 300);
-	//
-	//sf::RectangleShape rectangle1(sf::Vector2f(120, 50));
-	//rectangle1.setFillColor(sf::Color(300, 150, 50));
-	//rectangle1.setPosition(400, 230);
-	//
-	//sf::RectangleShape rectangle2(sf::Vector2f(80, 220));
-	//rectangle2.setFillColor(sf::Color(100, 500, 20));
-	//rectangle2.setPosition(600, 200);
-	//
-	//window.draw(circle1);
-	//window.draw(circle2);
-	//window.draw(rectangle1);
-	//window.draw(rectangle2);
-
-	//// Define the ground body.
-	//b2BodyDef snakeBodyDef;
-	//snakeBodyDef.position.Set(0.0f, -10.0f);
-	//
-	//// Call the body factory which allocates memory for the ground body
-	//// from a pool and creates the ground box shape (also from a pool).
-	//// The body is also added to the world.
-	//b2Body* snakeBody = world.CreateBody(&snakeBodyDef);
-	//
-	//// Define the ground box shape.
-	//b2PolygonShape snakeBox;
-	//
-	//// The extents are the half-widths of the box.
-	//snakeBox.SetAsBox(50.0f, 10.0f);
-	//
-	//// Add the ground fixture to the ground body.
-	//snakeBody->CreateFixture(&snakeBox, 0.0f);
-
 }
 

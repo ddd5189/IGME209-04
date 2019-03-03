@@ -44,12 +44,11 @@ void applyForces() {
 
 void moveTarget(float& xPos, float& yPos) {
 	srand(time(NULL));
-	int randNum = rand() % (5 - (-5) + 1) + (-5);
-	srand(time(NULL));
-	int randNum1 = rand() % (5 - (-5) + 1) + (-5);
+	int randNumX = rand() % (770 + 1);
+	int randNumY = rand() % (770 + 1);
 
-	xPos = randNum;
-	yPos = randNum1;
+	xPos = randNumX;
+	yPos = randNumY;
 
 	cout << "X:" << xPos << endl;
 	cout << "Y:" << yPos << endl;
