@@ -11,6 +11,10 @@
 #include <conio.h>
 using namespace std;
 
+
+// NOTE
+// as you will be able to tell, all of the code is in main, besides moveTarget. When I first started, I was having problems understanding how to get the funtions to work, 
+// so instead of dwelling on that I wanted to make sure that I could get it working properly then go back and see if I can get the functions working properly.
 int main()
 {
 	// variable for while loop
