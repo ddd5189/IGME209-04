@@ -7,3 +7,6 @@ void display();
 void applyForces();
 
 void moveTarget(float& xPos, float& yPos);
+
+int setTargetX();
+int setTargetY();
