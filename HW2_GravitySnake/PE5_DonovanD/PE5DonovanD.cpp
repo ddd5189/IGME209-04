@@ -72,7 +72,7 @@ void setupTargets()
 		{
 			if (i < amntOfTargets) {
 				targetLocations[i] = b2Vec2(setTargetX(), setTargetY());
-				cout << "X: " << targetLocations[i].x << " Y: " << targetLocations[i].y << endl;
+				//cout << "X: " << targetLocations[i].x << " Y: " << targetLocations[i].y << endl;
 			}
 			else {
 				targetLocations[i] = b2Vec2(-1000, -1000);
@@ -83,7 +83,7 @@ void setupTargets()
 
 bool selectNextTarget()
 {
-	cout << "X: " << targetLocations[target].x << " Y: " << targetLocations[target].y << endl;
+	//cout << "X: " << targetLocations[target].x << " Y: " << targetLocations[target].y << endl;
 	if (targetLocations[target] == b2Vec2(-1000, -1000)) {
 		return false;
 	}
@@ -117,7 +117,7 @@ int main()
 
 	int score = 0;
 
-	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.\nDon't be surprised if the score is really high!") << endl;
+	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.\nTo stop the snake press 'Space'\nTo reverse gravity press 'F'\nMake sure to not go to far out of the screen or the game will end!\nDon't be surprised if the score is really high! But Remember smaller is better!") << endl;
 
 	// Define the gravity vector.
 	b2Vec2 gravity(0.0f, -.5f);
@@ -223,14 +223,14 @@ int main()
 			// key press if - if p (don't know char for ESC) exit loop, if l move target (will get removed when collision is figured out), if wsad apply force in that direction
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-						cout << "Escape loop" << endl;
+						//cout << "Escape loop" << endl;
+						window.close();
 						loop = false;
 					}
 					//else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
 					//	moveTarget(targetX, targetY);
 					//}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-						//cout << "W was Pressed" << endl;
 						ReverseGravity(world);
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -263,22 +263,26 @@ int main()
 
 					// I tried using the -1000,-1000 point but it just wouldnt work
 					if (targetHit > amntOfTargets) {
-						cout << "Game Over" << endl;
+						cout << "Game Over\nFinal Score: " << score << endl;
 						window.close();
 						loop = false;
+						targetHit = 0;
 					}
 					else {
-						cout << "IT HIT" << endl;
+						//cout << "IT HIT" << endl;
 						targetX = currentLocation.x;
 						targetY = currentLocation.y;
 						targetHit++;
-						cout << targetHit << endl;
+						// print the score
+						cout << "Score: " << score << endl;
+						//cout << targetHit << endl;
 					}
 				}
 
 				// check to see if too far out of bounds, then close the game
 				if ((sfmlPosX > 850) || (sfmlPosX < -100) || (sfmlPosY < -300)) {
 					window.close();
+					cout << "TOO FAR OUT OF THE SCREEN!" << endl;
 					loop = false;
 				}
 
@@ -295,7 +299,6 @@ int main()
 				window.draw(snake);
 
 				//printf("%4.2f %4.2f\n", position.x, position.y);
-
 
 			window.display();
 			}
