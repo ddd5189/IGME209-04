@@ -11,6 +11,88 @@
 #include <conio.h>
 using namespace std;
 
+vector<b2Vec2> targetLocations;
+b2Vec2 currentLocation;
+
+float revGrav = .5f;
+int amntOfTargets;
+int target = 0;
+
+void processInput() 
+{
+
+}
+
+void ApplyForceUp(b2Body& player) 
+{
+	player.ApplyForceToCenter(b2Vec2(0, 0.1f), true);
+}
+
+void ApplyForceDown(b2Body& player) 
+{
+	player.ApplyForceToCenter(b2Vec2(0, -0.1f), true);
+}
+
+void ApplyForceLeft(b2Body& player) 
+{
+	player.ApplyForceToCenter(b2Vec2(0.1f, 0), true);
+}
+
+void ApplyForceRight(b2Body& player) 
+{
+	player.ApplyForceToCenter(b2Vec2(-0.1f, 0), true);
+}
+
+void StopMoving(b2Body& player) 
+{
+	b2Vec2 stop(0.0f, 0.0f);
+	player.SetLinearVelocity(stop);
+}
+
+void ReverseGravity(b2World& world) 
+{
+	revGrav *= -1;
+	b2Vec2 revGravity(0.0f, revGrav);
+	world.SetGravity(revGravity);
+}
+
+void setupTargets()
+{
+	cout << "\nHow many targets would you like to have (No less than 10): " << endl;
+	cin >> amntOfTargets;
+	if (amntOfTargets < 10) {
+		while (amntOfTargets < 10) {
+			cout << "Please input a number greater than 10" << endl;
+			cin >> amntOfTargets;
+		}
+	}
+	else {
+		targetLocations.resize(amntOfTargets + 1);
+		for (size_t i = 0; i < amntOfTargets + 1; i++)
+		{
+			if (i < amntOfTargets) {
+				targetLocations[i] = b2Vec2(setTargetX(), setTargetY());
+				cout << "X: " << targetLocations[i].x << " Y: " << targetLocations[i].y << endl;
+			}
+			else {
+				targetLocations[i] = b2Vec2(-1000, -1000);
+			}
+		}
+	}
+}
+
+bool selectNextTarget()
+{
+	cout << "X: " << targetLocations[target].x << " Y: " << targetLocations[target].y << endl;
+	if (targetLocations[target] == b2Vec2(-1000, -1000)) {
+		return false;
+	}
+	else {
+		currentLocation = targetLocations[target];
+		target++;
+		return true;
+	}
+}
 
 // NOTE
 // as you will be able to tell, all of the code is in main, besides moveTarget. When I first started, I was having problems understanding how to get the funtions to work, 
@@ -35,10 +117,10 @@ int main()
 
 	int score = 0;
 
-	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.\nIn order for the game to work, you must be in the input window\nFor optimal play, shrink the input window so that the play window is visable\n\nScore is like golf, the lower the better.\nDon't be surprised if the score is really high!") << endl;
+	cout << ("Welcome to Gravity Snake!\nTo play, use WASD to apply force IN that direction.\nDon't be surprised if the score is really high!") << endl;
 
 	// Define the gravity vector.
-	b2Vec2 gravity(0.0f, -.1f);
+	b2Vec2 gravity(0.0f, -.5f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
@@ -92,7 +174,9 @@ int main()
 	int32 positionIterations = 2;
 
 	// set the first target in the screen
-	moveTarget(targetX, targetY);
+	//moveTarget(targetX, targetY);
+
+	setupTargets();
 
 	while (loop)
 	{
@@ -117,7 +201,8 @@ int main()
 			target.setFillColor(sf::Color(100, 0, 0));
 			target.setPosition(targetX, targetY);
 
-			sf::RectangleShape snake(sf::Vector2f(50, 50));
+			sf::CircleShape snake;
+			snake.setRadius(30);
 			snake.setFillColor(sf::Color(10, 150, 50));
 			snake.setPosition(400, 400);
 
@@ -136,55 +221,63 @@ int main()
 			sfmlPosY = -position.y + 500;
 
 			// key press if - if p (don't know char for ESC) exit loop, if l move target (will get removed when collision is figured out), if wsad apply force in that direction
-				if (_kbhit()) {
-					key = _getch();
-					if (key == 'p') {
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 						cout << "Escape loop" << endl;
 						loop = false;
 					}
-					else if (key == 'l') {
-						moveTarget(targetX, targetY);
-					}
-					else if (key == 'w') {
+					//else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+					//	moveTarget(targetX, targetY);
+					//}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
 						//cout << "W was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(0, 0.5f), true);
+						ReverseGravity(world);
 					}
-					else if (key == 's') {
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+						//cout << "W was Pressed" << endl;
+						StopMoving(*snakeBody);
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+						//cout << "W was Pressed" << endl;
+						ApplyForceUp(*snakeBody);
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 						//cout << "S was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(0, -0.5f), true);
+						ApplyForceDown(*snakeBody);
 					}
-					else if (key == 'a') {
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 						//cout << "A was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(0.5f, 0), true);
+						ApplyForceLeft(*snakeBody);
 					}
-					else if (key == 'd') {
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 						//cout << "D was Pressed" << endl;
-						snakeBody->ApplyForceToCenter(b2Vec2(-0.5f, 0), true);
+						ApplyForceRight(*snakeBody);
 					}
-					printf("%4.2f %4.2f\n", sfmlPosX, sfmlPosY);
-					//printf("%4.2f %4.2f\n", targetX, targetY);
-					//cout << "Score: " << score << endl;
-				}
+					//printf("%4.2f %4.2f\n", sfmlPosX, sfmlPosY);
 
 
 				// collision detection between target and snake
 				if ((sfmlPosX - 20 < targetX + 20) && (sfmlPosX + 20 > targetX - 20) && (sfmlPosY - 20 < targetY + 20) && (sfmlPosY + 20> targetY -20))
 				{
-					if (targetHit > 10) {
+					selectNextTarget();
+
+					// I tried using the -1000,-1000 point but it just wouldnt work
+					if (targetHit > amntOfTargets) {
 						cout << "Game Over" << endl;
 						window.close();
 						loop = false;
 					}
 					else {
 						cout << "IT HIT" << endl;
-						moveTarget(targetX, targetY);
+						targetX = currentLocation.x;
+						targetY = currentLocation.y;
 						targetHit++;
 						cout << targetHit << endl;
 					}
 				}
 
 				// check to see if too far out of bounds, then close the game
-				if ((sfmlPosX > 850) || (sfmlPosX < -100) || (sfmlPosY < -100)) {
+				if ((sfmlPosX > 850) || (sfmlPosX < -100) || (sfmlPosY < -300)) {
 					window.close();
 					loop = false;
 				}
@@ -210,6 +303,37 @@ int main()
 
 	}
 
+
 	return 0;
 }
+
+//if (_kbhit()) {
+//	key = _getch();
+//	if (key == 'p') {
+//		cout << "Escape loop" << endl;
+//		loop = false;
+//	}
+//	else if (key == 'l') {
+//		moveTarget(targetX, targetY);
+//	}
+//	else if (key == 'w') {
+//		//cout << "W was Pressed" << endl;
+//		ApplyForceUp(*snakeBody);
+//	}
+//	else if (key == 's') {
+//		//cout << "S was Pressed" << endl;
+//		ApplyForceDown(*snakeBody);
+//	}
+//	else if (key == 'a') {
+//		//cout << "A was Pressed" << endl;
+//		ApplyForceLeft(*snakeBody);
+//	}
+//	else if (key == 'd') {
+//		//cout << "D was Pressed" << endl;
+//		ApplyForceRight(*snakeBody);
+//	}
+//	printf("%4.2f %4.2f\n", sfmlPosX, sfmlPosY);
+//	//printf("%4.2f %4.2f\n", targetX, targetY);
+//	//cout << "Score: " << score << endl;
+//}
 

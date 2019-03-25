@@ -9,6 +9,7 @@
 using namespace std;
 
 int key = 0;
+int randHelp = 0;
 
 void update() {
 	
@@ -50,6 +51,23 @@ void moveTarget(float& xPos, float& yPos) {
 	xPos = randNumX;
 	yPos = randNumY;
 
-	cout << "X:" << xPos << endl;
-	cout << "Y:" << yPos << endl;
+	//cout << "X:" << xPos << endl;
+	//cout << "Y:" << yPos << endl;
+}
+
+int setTargetX() {
+	srand(time(NULL) + randHelp);
+	int randNumX = rand() % (770 + 1);
+
+	randHelp += 100;
+
+	return randNumX;
+}
+int setTargetY() {
+	srand(time(NULL) + randHelp);
+	int randNumY = rand() % (770 + 1);
+
+	randHelp += 100;
+
+	return randNumY;
 }
