@@ -9,27 +9,36 @@ using namespace std;
 int main()
 {
 	ofstream outFile;
-	ifstream inFile;
+	ifstream inFile("test.txt", ios::binary);
+
+	
 
 	outFile.open("test.txt");
 	string line;
 
 	if (outFile.is_open()) {
-		outFile << "This is the first line\n";
-		outFile << "This is the second line\n";
+		outFile << "This is the first line in the test file\n";
+		outFile << "This is the second line in the test file\n";
 		outFile.close();
 	}
 
-	inFile.open("test.txt");
+	char* fileContents = nullptr;
 
-	//if (inFile.is_open()) {
-	//	while (getline(inFile, line))
-	//	{
-	//		cout << line << endl;
-	//	}
-	//	inFile.close();
-	//}
-    std::cout << "Hello World!\n"; 
+	if (inFile.is_open())
+	{
+		inFile.seekg(0, ios::end);
+		int length = (int)inFile.tellg();
+
+		inFile.seekg(0, ios::beg);
+
+		fileContents = new char[length + 1];
+
+		inFile.read(fileContents, length);
+		fileContents[length] = 0;
+	}
+	inFile.close();
+
+	std::cout << fileContents;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
