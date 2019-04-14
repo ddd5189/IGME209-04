@@ -2,11 +2,34 @@
 //
 
 #include "pch.h"
+#include "Stack.h"
 #include <iostream>
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Stack<double> stack;
+	stack.Push(5.7);
+	stack.Push(1.2);
+	stack.Push(7.4);
+	stack.Push(19.12);
+	stack.Push(4.34);
+	stack.Push(9.56);
+	if (stack.IsEmpty())
+	{
+		cout << "Tis empty" << endl;
+	}
+	else
+	{
+		cout << "Something be inside" << endl;
+	}
+	cout << "Size: " << stack.GetSize() << endl;
+	stack.Print(); 
+	stack.Pop();
+	stack.Pop();
+	stack.Pop();
+	stack.Pop();
+	stack.Print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
