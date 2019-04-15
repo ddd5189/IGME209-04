@@ -8,28 +8,122 @@ using namespace std;
 
 int main()
 {
-	Stack<double> stack;
-	stack.Push(5.7);
-	stack.Push(1.2);
-	stack.Push(7.4);
-	stack.Push(19.12);
-	stack.Push(4.34);
-	stack.Push(9.56);
-	if (stack.IsEmpty())
+	cout << "Stack using double data type: " << endl;
+	// creating stack
+	Stack<double> stackDoub;
+	// checking if it is empty 
+	if (stackDoub.IsEmpty())
 	{
-		cout << "Tis empty" << endl;
+		cout << "The stack is empty" << endl;
 	}
 	else
 	{
-		cout << "Something be inside" << endl;
+		cout << "The stack has data" << endl;
 	}
-	cout << "Size: " << stack.GetSize() << endl;
-	stack.Print(); 
-	stack.Pop();
-	stack.Pop();
-	stack.Pop();
-	stack.Pop();
-	stack.Print();
+	// pushing data into stack
+	stackDoub.Push(5.7);
+	stackDoub.Push(1.2);
+	stackDoub.Push(7.4);
+	stackDoub.Push(19.12);
+	stackDoub.Push(4.34);
+	stackDoub.Push(9.56);
+	cout << "Pushed Data" << endl;
+	// checking agian if it is empty
+	if (stackDoub.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// printing size of the stack, and the data inside
+	cout << "Size: " << stackDoub.GetSize() << endl;
+	stackDoub.Print();
+	// popping out some of the data, and printing size and data again
+	stackDoub.Pop();
+	stackDoub.Pop();
+	stackDoub.Pop();
+	cout << "Size: " << stackDoub.GetSize() << endl;
+	stackDoub.Print();
+
+	cout << "\nStack using bool data type: " << endl;
+	// creating stack
+	Stack<bool> stackBool;
+	// checking if it is empty 
+	if (stackBool.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// pushing data into stack
+	stackBool.Push(true);
+	stackBool.Push(true);
+	stackBool.Push(false);
+	stackBool.Push(true);
+	stackBool.Push(false);
+	stackBool.Push(false);
+	cout << "Pushed Data" << endl;
+	// checking agian if it is empty
+	if (stackBool.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// printing size of the stack, and the data inside
+	cout << "Size: " << stackBool.GetSize() << endl;
+	stackBool.Print();
+	// popping out some of the data, and printing size and data again
+	stackBool.Pop();
+	stackBool.Pop();
+	stackBool.Pop();
+	cout << "Size: " << stackBool.GetSize() << endl;
+	stackBool.Print();
+
+	cout << "\nStack using char data type: " << endl;
+	// creating stack
+	Stack<bool> stackChar;
+	// checking if it is empty 
+	if (stackChar.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// pushing data into stack
+	stackChar.Push('A');
+	stackChar.Push('B');
+	stackChar.Push('C');
+	stackChar.Push('D');
+	stackChar.Push('E');
+	stackChar.Push('F');
+	cout << "Pushed Data" << endl;
+	// checking agian if it is empty
+	if (stackChar.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// printing size of the stack, and the data inside
+	cout << "Size: " << stackChar.GetSize() << endl;
+	stackChar.Print();
+	// popping out some of the data, and printing size and data again
+	stackChar.Pop();
+	stackChar.Pop();
+	stackChar.Pop();
+	cout << "Size: " << stackChar.GetSize() << endl;
+	stackChar.Print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
