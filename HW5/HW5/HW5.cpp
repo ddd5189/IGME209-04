@@ -1,44 +1,35 @@
-// PE16.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// HW5.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "pch.h"
+#include "Stack.h"
 #include <iostream>
-#include <fstream>
 using namespace std;
 
 int main()
 {
-	ofstream outFile;
-	ifstream inFile("test.txt", ios::binary);
-
-	
-
-	outFile.open("test.txt");
-	string line;
-
-	if (outFile.is_open()) {
-		outFile << "This is the first line in the test file\n";
-		outFile << "This is the second line in the test file\n";
-		outFile.close();
-	}
-
-	char* fileContents = nullptr;
-
-	if (inFile.is_open())
+	Stack<double> stack;
+	stack.Push(5.7);
+	stack.Push(1.2);
+	stack.Push(7.4);
+	stack.Push(19.12);
+	stack.Push(4.34);
+	stack.Push(9.56);
+	if (stack.IsEmpty())
 	{
-		inFile.seekg(0, ios::end);
-		int length = (int)inFile.tellg();
-
-		inFile.seekg(0, ios::beg);
-
-		fileContents = new char[length + 1];
-
-		inFile.read(fileContents, length);
-		fileContents[length] = 0;
+		cout << "Tis empty" << endl;
 	}
-	inFile.close();
-
-	std::cout << fileContents;
+	else
+	{
+		cout << "Something be inside" << endl;
+	}
+	cout << "Size: " << stack.GetSize() << endl;
+	stack.Print(); 
+	stack.Pop();
+	stack.Pop();
+	stack.Pop();
+	stack.Pop();
+	stack.Print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
