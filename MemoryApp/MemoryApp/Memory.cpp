@@ -1,4 +1,5 @@
 #include "Memory.h"
+#include <iostream>
 
 struct header
 {
@@ -26,6 +27,9 @@ Memory::~Memory()
 
 void Memory::Init()
 {
+	cout << __FUNCTION__ << endl;
+	lock_guard<recursive_mutex> lock(george);
+
 	data = new char[64 * 1024];
 	freeMemory = 64 * 1024;
 	for (size_t i = 0; i < freeMemory; i++)
@@ -44,16 +48,29 @@ void Memory::Init()
 
 int Memory::GetFreeMemory()
 {
+	cout << __FUNCTION__ << endl;
 	return freeMemory;
 }
 void Memory::Release()
 {
+	cout << __FUNCTION__ << endl;
+	lock_guard<recursive_mutex> lock(george);
+
 	delete[] data;
+	data = nullptr;
 	freeMemory = 0;
 }
 
 void* Memory::Allocate(int size)
 {
+	cout << __FUNCTION__ << endl;
+	lock_guard<recursive_mutex> lock(george);
+
+	if (data == nullptr)
+	{
+		Init();
+	}
+
 	// check if we might have enough memory
 	if ((size + sizeof(itemheader)) > freeMemory)
 		return nullptr;
@@ -84,14 +101,19 @@ void* Memory::Allocate(int size)
 	return (item + sizeof(itemheader));
 }
 
-void Memory::Delete(void* size)
+void Memory::Delete(void* mem)
 {
+	cout << __FUNCTION__ << endl;
+	lock_guard<recursive_mutex> lock(george);
+
 	// get the item header
+	itemheader* item = ((itemheader*)mem)-1;
 	// set it to deleted
+	item->deleted = true;
 	// remove block from allocated list
+
 	// add block to free list
 	// defrag memory - neighbors
-	return nullptr;
 }
 
 

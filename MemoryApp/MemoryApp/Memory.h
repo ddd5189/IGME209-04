@@ -1,11 +1,15 @@
 #pragma once
 #include "MemoryInterface.h"
+#include <thread>
+#include <mutex>
+using namespace std;
 class Memory :
 	public IMemory
 {
 private:
 	char* data=nullptr;
 	int freeMemory=0;
+	recursive_mutex george;
 public:
 	Memory();
 	~Memory();

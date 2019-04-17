@@ -23,7 +23,7 @@
     <ProjectGuid>{AE991CD8-A59F-44E0-BD0A-55A24671848D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MemoryApp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
