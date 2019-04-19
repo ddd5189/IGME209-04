@@ -10,7 +10,7 @@ public:
 	//copy constructor
 	Stack(const Stack& other);
 	//copy aassignment operator
-	Stack& operator= (const Stack& other); 
+	Stack<T>& operator= (const Stack& other); 
 	void Push(T);
 	void Pop();
 	void Print();
@@ -41,12 +41,12 @@ Stack<T>::Stack(const Stack& other) : data()
 }
 
 // copy assignment operator
-//template <class T>
-//Stack<T>::Stack& operator= (const Stack& other)
-//{
-//	//if(this != &other)
-//	
-//}
+template <class T>
+Stack<T>& Stack<T>::operator= (const Stack& other)
+{
+	//if(this != &other)
+	
+}
 
 template <class T>
 void Stack<T>::Push(T var)
