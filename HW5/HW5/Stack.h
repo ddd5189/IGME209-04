@@ -36,17 +36,24 @@ Stack<T>::Stack()
 
 //copy constructor
 template <class T>
-Stack<T>::Stack(const Stack& other) : data()
+Stack<T>::Stack(const Stack& other)
 {
-
+	head = other.head;
+	current = other.current;
+	tail = other.tail;
 }
 
 // copy assignment operator
 template <class T>
 Stack<T>& Stack<T>::operator= (const Stack& other)
 {
-	//if(this != &other)
-	
+	if (this != &other)
+	{
+		head = other.head;
+		current = other.current;
+		tail = other.tail;
+	}
+	return *this;
 }
 
 template <class T>
