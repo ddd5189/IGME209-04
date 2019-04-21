@@ -11,6 +11,7 @@ public:
 	Stack(const Stack& other);
 	//copy aassignment operator
 	Stack<T>& operator= (const Stack& other); 
+	//friendostream& operator<<(ostream& ostr, Testconst& rhs);
 	void Push(T);
 	void Pop();
 	void Print();
@@ -127,5 +128,5 @@ bool Stack<T>::IsEmpty()
 template <class T>
 Stack<T>::~Stack()
 {
-	//delete[] data;
+	//delete newNode;
 }

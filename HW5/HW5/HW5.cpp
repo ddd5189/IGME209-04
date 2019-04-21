@@ -38,13 +38,13 @@ int main()
 		cout << "The stack has data" << endl;
 	}
 	// printing size of the stack, and the data inside
-	cout << "Size: " << stackDoub.GetSize() << endl;
+	cout << "Size of Stack is: " << stackDoub.GetSize() << endl;
 	stackDoub.Print();
 	// popping out some of the data, and printing size and data again
 	stackDoub.Pop();
 	stackDoub.Pop();
 	stackDoub.Pop();
-	cout << "Size: " << stackDoub.GetSize() << endl;
+	cout << "Size of Stack is: " << stackDoub.GetSize() << endl;
 	stackDoub.Print();
 
 	cout << "\nStack using bool data type: " << endl;
@@ -77,18 +77,18 @@ int main()
 		cout << "The stack has data" << endl;
 	}
 	// printing size of the stack, and the data inside
-	cout << "Size: " << stackBool.GetSize() << endl;
+	cout << "Size of Stack is: " << stackBool.GetSize() << endl;
 	stackBool.Print();
 	// popping out some of the data, and printing size and data again
 	stackBool.Pop();
 	stackBool.Pop();
 	stackBool.Pop();
-	cout << "Size: " << stackBool.GetSize() << endl;
+	cout << "Size of Stack is: " << stackBool.GetSize() << endl;
 	stackBool.Print();
 
 	cout << "\nStack using char data type: " << endl;
 	// creating stack
-	Stack<bool> stackChar;
+	Stack<char> stackChar;
 	// checking if it is empty 
 	if (stackChar.IsEmpty())
 	{
@@ -116,13 +116,13 @@ int main()
 		cout << "The stack has data" << endl;
 	}
 	// printing size of the stack, and the data inside
-	cout << "Size: " << stackChar.GetSize() << endl;
+	cout << "Size of Stack is: " << stackChar.GetSize() << endl;
 	stackChar.Print();
 	// popping out some of the data, and printing size and data again
 	stackChar.Pop();
 	stackChar.Pop();
 	stackChar.Pop();
-	cout << "Size: " << stackChar.GetSize() << endl;
+	cout << "Size of Stack is: " << stackChar.GetSize() << endl;
 	stackChar.Print();
 }
 

@@ -30,7 +30,7 @@ Node<T>::~Node()
 template<class T>
 void Node<T>::Print()
 {
-	cout << "Data is: " << _data << endl;
+	cout << "Data: " << _data << endl;
 }
 
 template<class T>
