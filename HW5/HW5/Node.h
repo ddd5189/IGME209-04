@@ -25,6 +25,7 @@ Node<T>::Node(T data)
 template<class T>
 Node<T>::~Node()
 {
+	delete next;
 }
 
 template<class T>

@@ -11,7 +11,7 @@ public:
 	Stack(const Stack& other);
 	//copy aassignment operator
 	Stack<T>& operator= (const Stack& other); 
-	//because I craeted the stack using nodes, this isn't necessary 
+	//because I created the stack using nodes, this isn't necessary 
 	//friend ostream& operator<<(ostream& ostr, Test const& rhs);
 	void Push(T);
 	void Pop();
@@ -145,5 +145,5 @@ bool Stack<T>::IsEmpty()
 template <class T>
 Stack<T>::~Stack()
 {
-	//delete newNode;
+	delete head, current, tail;
 }
