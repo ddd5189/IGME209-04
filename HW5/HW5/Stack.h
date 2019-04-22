@@ -11,7 +11,8 @@ public:
 	Stack(const Stack& other);
 	//copy aassignment operator
 	Stack<T>& operator= (const Stack& other); 
-	//friendostream& operator<<(ostream& ostr, Testconst& rhs);
+	//because I craeted the stack using nodes, this isn't necessary 
+	//friend ostream& operator<<(ostream& ostr, Test const& rhs);
 	void Push(T);
 	void Pop();
 	void Print();
@@ -55,6 +56,15 @@ Stack<T>& Stack<T>::operator= (const Stack& other)
 	}
 	return *this;
 }
+
+//this wasn't working trying to implement it
+/*
+template <class T>
+ostream& Stack<T>::operator<< (ostream& ostr, Test const& rhs)
+{
+
+}
+*/
 
 template <class T>
 void Stack<T>::Push(T var)
