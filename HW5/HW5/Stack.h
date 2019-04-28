@@ -8,7 +8,7 @@ class Stack
 public:
 	Stack();
 	//copy constructor
-	Stack(const Stack& other);
+	Stack(const Stack& other, int size);
 	//copy aassignment operator
 	Stack<T>& operator= (const Stack& other); 
 	//because I created the stack using nodes, this isn't necessary 
@@ -23,8 +23,6 @@ public:
 private:
 	int count;
 	Node<T>* head;
-	Node<T>* current;
-	Node<T>* tail;
 };
 
 
@@ -32,16 +30,15 @@ template <class T>
 Stack<T>::Stack()
 {
 	count = 0;
-	head = current = tail = nullptr;
+	head = nullptr;
 }
 
 //copy constructor
 template <class T>
-Stack<T>::Stack(const Stack& other)
+Stack<T>::Stack(const Stack& other, int size)
 {
 	head = other.head;
-	current = other.current;
-	tail = other.tail;
+	count = size;
 }
 
 // copy assignment operator
@@ -51,8 +48,6 @@ Stack<T>& Stack<T>::operator= (const Stack& other)
 	if (this != &other)
 	{
 		head = other.head;
-		current = other.current;
-		tail = other.tail;
 	}
 	return *this;
 }
@@ -72,18 +67,17 @@ void Stack<T>::Push(T var)
 	//create a new node to add the data
 	Node<T>* newNode = new Node<T>(var);
 	count++;
-	//if there is no data set this to the head
+	//if there is no data set this to the head 
 	if (head == nullptr)
 	{
 		head = newNode;
-		current = head;
 	}
-	//if there is data set the tail of the previous node as the node being created
+	//if there is data set the next of the newNode to head and make the newNode the head
 	else
 	{
-		tail->SetNext(newNode);
+		newNode->SetNext(head);
+		head = newNode;
 	}
-	tail = newNode;
 }
 
 template <class T>
@@ -97,15 +91,15 @@ void Stack<T>::Pop()
 	{
 		//set new node to head
 		newNode = head;
-		//if tail is not null
-		if (tail != nullptr)
+		//if count is greater than 0 which means there is data in the stack
+		if (count > 0)
 		{
 			//set head to it's next node
 			head = head->next;
 		}
 		else
 		{
-			//if tail is null, make head null
+			//if count is not greater than 0 which means there is no data in the stack
 			head = nullptr;
 		}
 
@@ -158,5 +152,5 @@ bool Stack<T>::IsEmpty()
 template <class T>
 Stack<T>::~Stack()
 {
-	delete head, current, tail;
+	delete head;
 }

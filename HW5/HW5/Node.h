@@ -25,7 +25,7 @@ Node<T>::Node(T data)
 template<class T>
 Node<T>::~Node()
 {
-	delete next;
+	// I had it deleting next here, but I believe the memory gets errased in the other dtor before, so this throws an error
 }
 
 template<class T>

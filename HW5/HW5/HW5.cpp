@@ -4,6 +4,9 @@
 #include "pch.h"
 #include "Stack.h"
 #include <iostream>
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 using namespace std;
 
 int main()
@@ -99,12 +102,12 @@ int main()
 		cout << "The stack has data" << endl;
 	}
 	// pushing data into stack
-	stackChar.Push('A');
-	stackChar.Push('B');
-	stackChar.Push('C');
-	stackChar.Push('D');
-	stackChar.Push('E');
 	stackChar.Push('F');
+	stackChar.Push('E');
+	stackChar.Push('D');
+	stackChar.Push('C');
+	stackChar.Push('B');
+	stackChar.Push('A');
 	cout << "Pushed Data" << endl;
 	// checking agian if it is empty
 	if (stackChar.IsEmpty())
@@ -124,6 +127,78 @@ int main()
 	stackChar.Pop();
 	cout << "Size of Stack is: " << stackChar.GetSize() << endl;
 	stackChar.Print();
+
+	cout << "\nStack using copy constructor on Double stack data type: " << endl;
+	// creating stack
+	Stack<double> copyDoub(stackDoub, stackDoub.GetSize());
+	// checking if it is empty 
+	if (copyDoub.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// pushing data into stack
+	copyDoub.Push(32.21);
+	copyDoub.Push(5.9);
+	cout << "Pushed Data" << endl;
+	// checking agian if it is empty
+	if (copyDoub.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// printing size of the stack, and the data inside
+	cout << "Size of Stack is: " << copyDoub.GetSize() << endl;
+	copyDoub.Print();
+	// popping out some of the data, and printing size and data again
+	copyDoub.Pop();
+	copyDoub.Pop();
+	copyDoub.Pop();
+	cout << "Size of Stack is: " << copyDoub.GetSize() << endl;
+	copyDoub.Print();
+
+	cout << "\nStack using copy assingment opperator setting the copied double stack equal to the original double stack: " << endl;
+	// creating stack
+	copyDoub = stackDoub;
+	// checking if it is empty 
+	if (copyDoub.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// pushing data into stack
+	copyDoub.Push(83.1);
+	copyDoub.Push(3.39);
+	cout << "Pushed Data" << endl;
+	// checking agian if it is empty
+	if (copyDoub.IsEmpty())
+	{
+		cout << "The stack is empty" << endl;
+	}
+	else
+	{
+		cout << "The stack has data" << endl;
+	}
+	// printing size of the stack, and the data inside
+	cout << "Size of Stack is: " << copyDoub.GetSize() << endl;
+	copyDoub.Print();
+	// popping out some of the data, and printing size and data again
+	copyDoub.Pop();
+	copyDoub.Pop();
+	copyDoub.Pop();
+	cout << "Size of Stack is: " << copyDoub.GetSize() << endl;
+	copyDoub.Print();
+
+	_CrtDumpMemoryLeaks();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
