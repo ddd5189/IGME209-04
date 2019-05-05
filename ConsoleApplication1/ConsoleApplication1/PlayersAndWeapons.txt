@@ -1,0 +1,10 @@
+Player 1 Thor has a Hammer
+Player 2 Loki has a Wand
+Player 3 Heimdall has a Sword
+Player 4 Hogun has a Bow
+Player 5 Fandral has a Lance
+Player 6 Volstagg has a Food
+Player 7 Odin has a Eyepatch
+Player 8 Frigga has a Mace
+Player 9 Sif has a Broadsword
+Player 10 Amara has a Spells
